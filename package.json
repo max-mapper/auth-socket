@@ -1,0 +1,20 @@
+{
+  "name": "auth-socket",
+  "version": "0.1.0",
+  "description": "easily add authenticated websockets to your http server + session store",
+  "main": "index.js",
+  "scripts": {
+    "test": "browserify www/index.js -o www/bundle.js && node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:maxogden/auth-socket.git"
+  },
+  "author": "max ogden",
+  "license": "BSD",
+  "dependencies": {
+    "ws": "~0.4.25",
+    "websocket-stream": "~0.1.0",
+    "doorknob": "0.2.0"
+  }
+}
