@@ -12,12 +12,16 @@ module.exports = function(opts, cb) {
   
   httpServer.on('upgrade', function (req, socket, head) {
     httpServer.doorknob.getProfile(req, function(err, profile) {
+      errorMessage = false
       if (err || !profile || !profile.email) {
-        socket.end()
-        return cb(err || 'not logged in')
+        errorMessage = 'not logged in'
+        if (opts.closeAnonymous) {
+          socket.end()
+          return cb(err || errorMessage)
+        }
       }
       webSocketServer.handleUpgrade(req, socket, head, function(conn) {
-        cb(false, req, conn, head)
+        cb(errorMessage, req, conn, head)
       })
     })
   })
