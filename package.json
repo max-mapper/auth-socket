@@ -1,6 +1,6 @@
 {
   "name": "auth-socket",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "easily add authenticated websockets to your http server + session store",
   "main": "index.js",
   "scripts": {
