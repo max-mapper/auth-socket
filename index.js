@@ -1,34 +1,29 @@
-var WebSocketServer = require('ws').Server
-var websocket = require('websocket-stream')
-var http = require('http')
 var path = require('path')
-var doorknobServer = require('doorknob/server')
 
-module.exports = function(opts, cb) {
-  if (!opts) opts = { port: 8181 }
+module.exports = AuthSocket
+
+function AuthSocket(opts) {
+  if (!(this instanceof AuthSocket)) return new AuthSocket(opts)
+  if (!opts) opts = {}
+  this.opts = opts
+  this.handle = this.opts.handler || defaultHandler
   
-  var httpServer = opts.httpServer || doorknobServer(opts)
-  var webSocketServer = opts.webSocketServer || new WebSocketServer({ noServer: true, clientTracking: false })
-  
-  httpServer.on('upgrade', function (req, socket, head) {
-    httpServer.doorknob.getProfile(req, function(err, profile) {
-      errorMessage = false
-      if (err || !profile || !profile.email) {
-        errorMessage = 'not logged in'
-        if (opts.closeAnonymous) {
-          socket.end()
-          return cb(err || errorMessage)
-        }
-      }
+  function defaultHandler(req, cb) {
+    setImmediate(function() {
+      // anonymous user
+      cb(null, null, req)
+    })
+  }
+}
+
+AuthSocket.prototype.upgrade = function (webSocketServer, cb) {
+  var handler = this.handle
+  return function(req, socket, head) {
+    handler(req, function(err, user) {
+      // if (opts.closeAnonymous) socket.end()
       webSocketServer.handleUpgrade(req, socket, head, function(conn) {
-        cb(errorMessage, req, conn, head)
+        cb(err, user, conn)
       })
     })
-  })
-  
-  return {
-    httpServer: httpServer,
-    webSocketServer: webSocketServer,
-    options: opts
   }
 }

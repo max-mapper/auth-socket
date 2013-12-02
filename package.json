@@ -1,10 +1,11 @@
 {
   "name": "auth-socket",
-  "version": "0.2.3",
-  "description": "easily add authenticated websockets to your http server + session store",
+  "version": "1.0.0",
+  "description": "pluggable authentication API for http, websockets, etc",
   "main": "index.js",
   "scripts": {
-    "test": "browserify www/index.js -o www/bundle.js && node test.js"
+    "start": "node http-test.js",
+    "watch": "watchify www/index.js -o www/bundle.js -v"
   },
   "repository": {
     "type": "git",
@@ -12,9 +13,14 @@
   },
   "author": "max ogden",
   "license": "BSD",
-  "dependencies": {
-    "ws": "~0.4.25",
+  "devDependencies": {
+    "doorknob": "~2.0.0",
+    "ws": "~0.4.31",
     "websocket-stream": "~0.1.0",
-    "doorknob": "~2.0.0"
+    "routes-router": "~1.5.3",
+    "console-log": "~1.0.0",
+    "ecstatic": "~0.4.12",
+    "console-stream": "~0.1.1",
+    "watchify": "~0.4.1"
   }
 }
