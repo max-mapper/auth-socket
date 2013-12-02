@@ -11,7 +11,6 @@ app.addRoute('*', ecstatic('www/'))
 
 var auth = AuthSocket({
   handler: function (req, cb) {
-    console.log(req)
     if (req.url.match('hello')) cb(null, {name: 'bob'})
     else cb(null, null)
   }
