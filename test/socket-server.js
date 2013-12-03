@@ -4,6 +4,7 @@ var websocketStream = require('websocket-stream')
 var ecstatic = require('ecstatic')
 var AuthSocket = require("../")
 var Router = require('routes-router')
+var logger = require('console-stream')
 
 var app = Router()
 
@@ -24,7 +25,9 @@ server.on("upgrade", auth.upgrade(wss, function(err, user, conn) {
   stream.write('user: ' + JSON.stringify(user) + '\n')
   // echo party
   stream.pipe(stream)
+  stream.pipe(logger())
+
 }))
  
-server.listen(3000)
-console.log('open http://localhost:3000/socket.html')
+server.listen(8080)
+console.log('open http://localhost:8080/socket.html')

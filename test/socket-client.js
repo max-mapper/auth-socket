@@ -3,7 +3,7 @@ var logger = require('console-stream')
 
 require('console-log').show(true)
 
-var wsurl = 'ws://localhost:3000' + window.location.search // pass along querystring
+var wsurl = 'ws://localhost:8080' + window.location.search // pass along querystring
 var socket = websocket(wsurl)
 var logInterval
 
