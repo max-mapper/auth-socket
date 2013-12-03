@@ -4,8 +4,8 @@
   "description": "pluggable authentication API for http, websockets, etc",
   "main": "index.js",
   "scripts": {
-    "start": "node http-test.js",
-    "watch": "watchify www/index.js -o www/bundle.js -v"
+    "start": "browserify test/socket-client.js -o test/socket-bundle.js && node test/socket-server.js",
+    "persona": "browserify test/persona-client.js -o test/persona-bundle.js && node test/persona-server.js"    
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,6 @@
     "routes-router": "~1.5.3",
     "console-log": "~1.0.0",
     "ecstatic": "~0.4.12",
-    "console-stream": "~0.1.1",
-    "watchify": "~0.4.1"
+    "console-stream": "~0.1.1"
   }
 }

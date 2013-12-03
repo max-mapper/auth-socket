@@ -8,10 +8,10 @@ function AuthSocket(opts) {
   this.opts = opts
   this.handle = this.opts.handler || defaultHandler
   
-  function defaultHandler(req, cb) {
+  function defaultHandler(req, res, cb) {
     setImmediate(function() {
       // anonymous user
-      cb(null, null, req)
+      cb(null, null, req, res)
     })
   }
 }
@@ -19,7 +19,7 @@ function AuthSocket(opts) {
 AuthSocket.prototype.upgrade = function (webSocketServer, cb) {
   var handler = this.handle
   return function(req, socket, head) {
-    handler(req, function(err, user) {
+    handler(req, socket, function(err, user) {
       // if (opts.closeAnonymous) socket.end()
       webSocketServer.handleUpgrade(req, socket, head, function(conn) {
         cb(err, user, conn)
